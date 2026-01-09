@@ -43,5 +43,5 @@ bin/
 
 ### Misc ###
 .lastDeploymentsId
-.qodo
 local.properties
+kotlin-js-store

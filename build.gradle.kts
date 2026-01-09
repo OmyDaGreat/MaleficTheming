@@ -1,4 +1,7 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import com.android.build.api.dsl.androidLibrary
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
 
 val user = "OmyDaGreat"
@@ -9,7 +12,6 @@ val v: String by project
 val desc = "A Compose Multiplatform library for creating and managing material themes"
 
 plugins {
-    kotlin("plugin.serialization") version libs.versions.kotlin
     kotlin("plugin.compose") version libs.versions.kotlin
     kotlin("multiplatform") version libs.versions.kotlin
     alias(libs.plugins.maven.publish)
@@ -57,25 +59,19 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    js {
+        nodejs()
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(compose.material3)
-            implementation(libs.json)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
-        jvmMain.dependencies {
-            implementation(compose.desktop.common)
-        }
         jvmTest.dependencies {
             implementation(compose.desktop.currentOs)
-        }
-        androidMain.dependencies {
-            implementation(compose.material3)
-        }
-        iosMain.dependencies {
-            implementation(compose.material3)
         }
     }
 }

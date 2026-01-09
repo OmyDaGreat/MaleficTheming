@@ -1,7 +1,6 @@
 package xyz.malefic.compose.theming
 
 import androidx.compose.ui.graphics.Color
-import kotlinx.serialization.Serializable
 
 /**
  * Data class representing the theme configuration for the application using Material 3 color scheme.
@@ -106,108 +105,152 @@ data class ThemeConfig(
     val onTertiaryFixedVariant: Color,
 )
 
+@DslMarker
+annotation class ThemeConfigDsl
+
 /**
- * Serializable data class representing the theme configuration for the application using Material 3 color scheme.
- *
- * This class is used for serializing and deserializing theme configurations.
- *
- * @property primary The primary color of the theme as a string.
- * @property onPrimary The color used for text and icons displayed on top of the primary color as a string.
- * @property primaryContainer The primary container color of the theme as a string.
- * @property onPrimaryContainer The color used for text and icons displayed on top of the primary container as a string.
- * @property secondary The secondary color of the theme as a string.
- * @property onSecondary The color used for text and icons displayed on top of the secondary color as a string.
- * @property secondaryContainer The secondary container color of the theme as a string.
- * @property onSecondaryContainer The color used for text and icons displayed on top of the secondary container as a string.
- * @property tertiary The tertiary color of the theme as a string.
- * @property onTertiary The color used for text and icons displayed on top of the tertiary color as a string.
- * @property tertiaryContainer The tertiary container color of the theme as a string.
- * @property onTertiaryContainer The color used for text and icons displayed on top of the tertiary container as a string.
- * @property error The error color of the theme as a string.
- * @property onError The color used for text and icons displayed on top of the error color as a string.
- * @property errorContainer The error container color of the theme as a string.
- * @property onErrorContainer The color used for text and icons displayed on top of the error container as a string.
- * @property background The background color of the theme as a string.
- * @property onBackground The color used for text and icons displayed on top of the background color as a string.
- * @property surface The surface color of the theme as a string.
- * @property onSurface The color used for text and icons displayed on top of the surface color as a string.
- * @property surfaceVariant The surface variant color of the theme as a string.
- * @property onSurfaceVariant The color used for text and icons displayed on top of the surface variant as a string.
- * @property surfaceTint The surface tint color of the theme as a string.
- * @property outline The outline color of the theme as a string.
- * @property outlineVariant The outline variant color of the theme as a string.
- * @property scrim The scrim color of the theme as a string.
- * @property inverseSurface The inverse surface color of the theme as a string.
- * @property inverseOnSurface The color used for text and icons displayed on top of the inverse surface as a string.
- * @property inversePrimary The inverse primary color of the theme as a string.
- * @property surfaceDim The dim surface color of the theme as a string.
- * @property surfaceBright The bright surface color of the theme as a string.
- * @property surfaceContainerLowest The lowest surface container color of the theme as a string.
- * @property surfaceContainerLow The low surface container color of the theme as a string.
- * @property surfaceContainer The surface container color of the theme as a string.
- * @property surfaceContainerHigh The high surface container color of the theme as a string.
- * @property surfaceContainerHighest The highest surface container color of the theme as a string.
- * @property primaryFixed The primary fixed color of the theme as a string.
- * @property primaryFixedDim The dim primary fixed color of the theme as a string.
- * @property onPrimaryFixed The color used for text and icons displayed on top of the primary fixed color as a string.
- * @property onPrimaryFixedVariant The color used for text and icons displayed on top of the primary fixed variant as a string.
- * @property secondaryFixed The secondary fixed color of the theme as a string.
- * @property secondaryFixedDim The dim secondary fixed color of the theme as a string.
- * @property onSecondaryFixed The color used for text and icons displayed on top of the secondary fixed color as a string.
- * @property onSecondaryFixedVariant The color used for text and icons displayed on top of the secondary fixed variant as a string.
- * @property tertiaryFixed The tertiary fixed color of the theme as a string.
- * @property tertiaryFixedDim The dim tertiary fixed color of the theme as a string.
- * @property onTertiaryFixed The color used for text and icons displayed on top of the tertiary fixed color as a string.
- * @property onTertiaryFixedVariant The color used for text and icons displayed on top of the tertiary fixed variant as a string.
+ * DSL Builder for creating ThemeConfig with intelligent defaults.
+ * Only requires primary and background colors - all other colors are derived with sensible defaults.
  */
-@Serializable
-data class SerializableThemeConfig(
-    val primary: String,
-    val onPrimary: String,
-    val primaryContainer: String,
-    val onPrimaryContainer: String,
-    val secondary: String,
-    val onSecondary: String,
-    val secondaryContainer: String,
-    val onSecondaryContainer: String,
-    val tertiary: String,
-    val onTertiary: String,
-    val tertiaryContainer: String,
-    val onTertiaryContainer: String,
-    val error: String,
-    val onError: String,
-    val errorContainer: String,
-    val onErrorContainer: String,
-    val background: String,
-    val onBackground: String,
-    val surface: String,
-    val onSurface: String,
-    val surfaceVariant: String,
-    val onSurfaceVariant: String,
-    val surfaceTint: String,
-    val outline: String,
-    val outlineVariant: String,
-    val scrim: String,
-    val inverseSurface: String,
-    val inverseOnSurface: String,
-    val inversePrimary: String,
-    val surfaceDim: String,
-    val surfaceBright: String,
-    val surfaceContainerLowest: String,
-    val surfaceContainerLow: String,
-    val surfaceContainer: String,
-    val surfaceContainerHigh: String,
-    val surfaceContainerHighest: String,
-    val primaryFixed: String,
-    val primaryFixedDim: String,
-    val onPrimaryFixed: String,
-    val onPrimaryFixedVariant: String,
-    val secondaryFixed: String,
-    val secondaryFixedDim: String,
-    val onSecondaryFixed: String,
-    val onSecondaryFixedVariant: String,
-    val tertiaryFixed: String,
-    val tertiaryFixedDim: String,
-    val onTertiaryFixed: String,
-    val onTertiaryFixedVariant: String,
-)
+@ThemeConfigDsl
+class ThemeConfigBuilder {
+    var primary: Color? = null
+    var onPrimary: Color? = null
+    var primaryContainer: Color? = null
+    var onPrimaryContainer: Color? = null
+
+    var secondary: Color? = null
+    var onSecondary: Color? = null
+    var secondaryContainer: Color? = null
+    var onSecondaryContainer: Color? = null
+
+    var tertiary: Color? = null
+    var onTertiary: Color? = null
+    var tertiaryContainer: Color? = null
+    var onTertiaryContainer: Color? = null
+
+    var error: Color? = null
+    var onError: Color? = null
+    var errorContainer: Color? = null
+    var onErrorContainer: Color? = null
+
+    var background: Color? = null
+    var onBackground: Color? = null
+
+    var surface: Color? = null
+    var onSurface: Color? = null
+    var surfaceVariant: Color? = null
+    var onSurfaceVariant: Color? = null
+    var surfaceTint: Color? = null
+
+    var outline: Color? = null
+    var outlineVariant: Color? = null
+    var scrim: Color? = null
+
+    var inverseSurface: Color? = null
+    var inverseOnSurface: Color? = null
+    var inversePrimary: Color? = null
+
+    var surfaceDim: Color? = null
+    var surfaceBright: Color? = null
+    var surfaceContainerLowest: Color? = null
+    var surfaceContainerLow: Color? = null
+    var surfaceContainer: Color? = null
+    var surfaceContainerHigh: Color? = null
+    var surfaceContainerHighest: Color? = null
+
+    var primaryFixed: Color? = null
+    var primaryFixedDim: Color? = null
+    var onPrimaryFixed: Color? = null
+    var onPrimaryFixedVariant: Color? = null
+
+    var secondaryFixed: Color? = null
+    var secondaryFixedDim: Color? = null
+    var onSecondaryFixed: Color? = null
+    var onSecondaryFixedVariant: Color? = null
+
+    var tertiaryFixed: Color? = null
+    var tertiaryFixedDim: Color? = null
+    var onTertiaryFixed: Color? = null
+    var onTertiaryFixedVariant: Color? = null
+
+    fun build(): ThemeConfig {
+        val primaryColor = primary ?: Color(0xFF6200EE)
+        val bgColor = background ?: Color.White
+        val surfaceColor = surface ?: bgColor
+        val secondaryColor = secondary ?: primaryColor.copy(alpha = 0.7f)
+        val errorColor = error ?: Color(0xFFB00020)
+
+        val onPrimaryColor = onPrimary ?: Color.White
+        val onBgColor = onBackground ?: Color.Black
+        val onSurfaceColor = onSurface ?: onBgColor
+        val onSecondaryColor = onSecondary ?: Color.White
+        val onErrorColor = onError ?: Color.White
+
+        return ThemeConfig(
+            primary = primaryColor,
+            onPrimary = onPrimaryColor,
+            primaryContainer = primaryContainer ?: primaryColor,
+            onPrimaryContainer = onPrimaryContainer ?: onPrimaryColor,
+            secondary = secondaryColor,
+            onSecondary = onSecondaryColor,
+            secondaryContainer = secondaryContainer ?: secondaryColor,
+            onSecondaryContainer = onSecondaryContainer ?: onSecondaryColor,
+            tertiary = tertiary ?: secondaryColor,
+            onTertiary = onTertiary ?: onSecondaryColor,
+            tertiaryContainer = tertiaryContainer ?: secondaryColor,
+            onTertiaryContainer = onTertiaryContainer ?: onSecondaryColor,
+            error = errorColor,
+            onError = onErrorColor,
+            errorContainer = errorContainer ?: errorColor,
+            onErrorContainer = onErrorContainer ?: onErrorColor,
+            background = bgColor,
+            onBackground = onBgColor,
+            surface = surfaceColor,
+            onSurface = onSurfaceColor,
+            surfaceVariant = surfaceVariant ?: surfaceColor,
+            onSurfaceVariant = onSurfaceVariant ?: onSurfaceColor,
+            surfaceTint = surfaceTint ?: primaryColor,
+            outline = outline ?: onSurfaceColor.copy(alpha = 0.12f),
+            outlineVariant = outlineVariant ?: onSurfaceColor.copy(alpha = 0.06f),
+            scrim = scrim ?: Color.Black,
+            inverseSurface = inverseSurface ?: onSurfaceColor,
+            inverseOnSurface = inverseOnSurface ?: surfaceColor,
+            inversePrimary = inversePrimary ?: primaryColor,
+            surfaceDim = surfaceDim ?: surfaceColor,
+            surfaceBright = surfaceBright ?: surfaceColor,
+            surfaceContainerLowest = surfaceContainerLowest ?: surfaceColor,
+            surfaceContainerLow = surfaceContainerLow ?: surfaceColor,
+            surfaceContainer = surfaceContainer ?: surfaceColor,
+            surfaceContainerHigh = surfaceContainerHigh ?: surfaceColor,
+            surfaceContainerHighest = surfaceContainerHighest ?: surfaceColor,
+            primaryFixed = primaryFixed ?: primaryColor,
+            primaryFixedDim = primaryFixedDim ?: primaryColor,
+            onPrimaryFixed = onPrimaryFixed ?: onPrimaryColor,
+            onPrimaryFixedVariant = onPrimaryFixedVariant ?: onPrimaryColor,
+            secondaryFixed = secondaryFixed ?: secondaryColor,
+            secondaryFixedDim = secondaryFixedDim ?: secondaryColor,
+            onSecondaryFixed = onSecondaryFixed ?: onSecondaryColor,
+            onSecondaryFixedVariant = onSecondaryFixedVariant ?: onSecondaryColor,
+            tertiaryFixed = tertiaryFixed ?: secondaryColor,
+            tertiaryFixedDim = tertiaryFixedDim ?: secondaryColor,
+            onTertiaryFixed = onTertiaryFixed ?: onSecondaryColor,
+            onTertiaryFixedVariant = onTertiaryFixedVariant ?: onSecondaryColor,
+        )
+    }
+}
+
+/**
+ * Creates a ThemeConfig using a type-safe DSL with intelligent defaults.
+ * Only primary color is required - all other colors have sensible defaults.
+ *
+ * Example:
+ * ```
+ * val theme = themeConfig {
+ *     primary = Color(0xFF6200EE)
+ *     background = Color.White
+ *     // All other colors are automatically derived
+ * }
+ * ```
+ */
+fun themeConfig(block: ThemeConfigBuilder.() -> Unit): ThemeConfig = ThemeConfigBuilder().apply(block).build()

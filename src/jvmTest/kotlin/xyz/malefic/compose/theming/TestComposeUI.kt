@@ -16,41 +16,41 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import xyz.malefic.compose.theming.util.parseHexColor
+import xyz.malefic.compose.theming.util.toColor
 
 object TestComposeUI {
     @Composable
     fun ThemeToggleExampleComposable() {
         var isLightTheme by remember { mutableStateOf(true) }
 
-        // Create theme configurations for light and dark themes
+        // Create theme configurations for light and dark themes using DSL
         val lightTheme =
-            createSimpleThemeConfig(
-                primary = parseHexColor("#FF6200EE"),
-                secondary = parseHexColor("#FF03DAC6"),
-                background = Color.White,
-                surface = Color.White,
-                error = parseHexColor("#FFB00020"),
-                onPrimary = Color.White,
-                onSecondary = Color.Black,
-                onBackground = Color.Black,
-                onSurface = Color.Black,
-                onError = Color.White,
-            )
+            themeConfig {
+                primary = "#6200EE".toColor()
+                secondary = "#03DAC6".toColor()
+                background = Color.White
+                surface = Color.White
+                error = "#B00020".toColor()
+                onPrimary = Color.White
+                onSecondary = Color.Black
+                onBackground = Color.Black
+                onSurface = Color.Black
+                onError = Color.White
+            }
 
         val darkTheme =
-            createSimpleThemeConfig(
-                primary = parseHexColor("#FFBB86FC"),
-                secondary = parseHexColor("#FF03DAC6"),
-                background = parseHexColor("#FF121212"),
-                surface = parseHexColor("#FF121212"),
-                error = parseHexColor("#FFCF6679"),
-                onPrimary = Color.Black,
-                onSecondary = Color.Black,
-                onBackground = Color.White,
-                onSurface = Color.White,
-                onError = Color.Black,
-            )
+            themeConfig {
+                primary = "#BB86FC".toColor()
+                secondary = "#03DAC6".toColor()
+                background = "#121212".toColor()
+                surface = "#121212".toColor()
+                error = "#CF6679".toColor()
+                onPrimary = Color.Black
+                onSecondary = Color.Black
+                onBackground = Color.White
+                onSurface = Color.White
+                onError = Color.Black
+            }
 
         val currentTheme = if (isLightTheme) lightTheme else darkTheme
 

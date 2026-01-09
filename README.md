@@ -4,7 +4,7 @@
 
 ![Maven Central Version](https://img.shields.io/maven-central/v/xyz.malefic.compose/theming)
 
-> A Kotlin Multiplatform library for creating and managing material themes in Jetpack Compose
+> A Kotlin Multiplatform library for creating and managing Material 3 themes in Jetpack Compose with a type-safe DSL
 
 ## 🦿 Prerequisites
 
@@ -14,14 +14,10 @@
 ## ⌨️ Usage
 
 1. Get the artifact from the [central repo](https://central.sonatype.com/artifact/xyz.malefic.compose/theming)
-2. Set up the MaleficTheme from `xyz.malefic.compose.theming.MaleficTheme` with:
-   - Direct `ThemeConfig` objects
-   - JSON strings (cross-platform)
-   - Resource paths (platform-specific)
-   - InputStream (JVM Desktop only, for backward compatibility)
-3. Read [the documentation]() for more details
+2. Create themes using the type-safe DSL with intelligent defaults
+3. Customize as much or as little as you want - only primary color is required!
 
-### Platform-Specific Dependencies
+### Installation
 
 Add the library to your `build.gradle.kts`:
 
@@ -30,71 +26,127 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("xyz.malefic.compose:theming:1.1.2")
+                implementation("xyz.malefic.compose:theming:2.0.0")
             }
         }
     }
 }
 ```
 
-### API Examples
+### Quick Start
+
+The simplest possible theme - just specify a primary color:
 
 ```kotlin
-// Cross-platform: Using ThemeConfig directly
 MaleficTheme(
-    themeConfig = ThemeConfig(/* your colors */),
-    content = { /* your UI */ }
-)
-
-// Cross-platform: Using JSON string
-val themeJson = """{"primary": "#FF6200EE", ...}"""
-MaleficTheme(
-    jsonContent = themeJson,
-    content = { /* your UI */ }
-)
-
-// JVM Desktop only: Using InputStream (backward compatibility)
-val inputStream = this::class.java.getResourceAsStream("/theme.json")
-MaleficTheme(
-    inputStream = inputStream!!,
-    content = { /* your UI */ }
-)
-
-// Android: Using assets with context
-PlatformFileReader.context = this // Set context first
-val themeFromAssets = loadThemeFromResource("themes/light.json")
-MaleficTheme(
-    themeConfig = themeFromAssets,
-    content = { /* your UI */ }
-)
-
-// Android: Alternative approach with helper function
-val themeContent = readThemeAsset(context, "themes/light.json")
-MaleficTheme(
-    jsonContent = themeContent,
-    content = { /* your UI */ }
-)
-
-// iOS: Using bundle resources
-val themeFromBundle = loadThemeFromResource("light.json")
-MaleficTheme(
-    themeConfig = themeFromBundle,
-    content = { /* your UI */ }
-)
-
-// iOS: Alternative approach with helper function
-val themeContent = readBundleResource("light", "json")
-MaleficTheme(
-    jsonContent = themeContent,
-    content = { /* your UI */ }
-)
+    theme = themeConfig {
+        primary = Color(0xFF6200EE)
+    }
+) {
+    // Your UI here
+}
 ```
+
+All other colors are automatically derived with intelligent defaults!
+
+### Customization Examples
+
+Specify as much or as little as you want:
+
+```kotlin
+// Minimal - just primary and background
+MaleficTheme(
+    theme = themeConfig {
+        primary = Color(0xFF6200EE)
+        background = Color.White
+    }
+) {
+    // Your content
+}
+
+// More customization
+MaleficTheme(
+    theme = themeConfig {
+        primary = Color(0xFF6200EE)
+        onPrimary = Color.White
+        secondary = Color(0xFF03DAC6)
+        background = Color(0xFFFFFBFE)
+        surface = Color(0xFFFFFBFE)
+        error = Color(0xFFB3261E)
+    }
+) {
+    // Your content
+}
+
+// Use hex strings with the extension
+MaleficTheme(
+    theme = themeConfig {
+        primary = "#6200EE".toColor()
+        secondary = "#03DAC6".toColor()
+        background = "#FFFBFE".toColor()
+    }
+) {
+    // Your content
+}
+
+// Full Material 3 customization (if needed)
+MaleficTheme(
+    theme = themeConfig {
+        primary = Color(0xFF6200EE)
+        onPrimary = Color.White
+        primaryContainer = Color(0xFFEADDFF)
+        onPrimaryContainer = Color(0xFF21005E)
+        secondary = Color(0xFF03DAC6)
+        // ... customize all 47 Material 3 colors
+    }
+) {
+    // Your content
+}
+```
+
+### Default Theme
+
+No configuration needed? Use the default theme:
+
+```kotlin
+MaleficTheme {
+    // Your content with default Material 3 colors
+}
+```
+
+## 🎯 Features
+
+- ✅ **Type-safe DSL** - Kotlin DSL with full IDE support and autocomplete
+- ✅ **Intelligent Defaults** - Specify only what you need, rest is derived automatically
+- ✅ **Material 3** - Full Material 3 color scheme support (47 colors)
+- ✅ **Multiplatform** - Works on JVM, iOS, and Android
+- ✅ **Hex Support** - Easy hex color conversion with `.toColor()` extension
 
 ## 🎯 Supported Platforms
 
 - ✅ **JVM Desktop** (Compose Desktop)
 - ✅ **iOS** (Compose Multiplatform)
 - ✅ **Android** (Jetpack Compose)
+
+## 🔄 Migration from 1.x
+
+If you were using the old file-based approach:
+
+**Old (1.x):**
+```kotlin
+val themeJson = """{"primary": "#FF6200EE", ...}"""
+MaleficThemeFromJson(jsonContent = themeJson) { }
+```
+
+**New (2.x):**
+```kotlin
+MaleficTheme(
+    theme = themeConfig {
+        primary = "#6200EE".toColor()
+        // Only specify what you need!
+    }
+) { }
+```
 
 ## ✍️ Author
 
