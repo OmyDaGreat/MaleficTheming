@@ -2,7 +2,7 @@
 agp = "8.13.2"
 dokka = "2.2.0"
 compose = "1.11.0"
-kotlin = "2.3.21"
+kotlin = "2.4.20"
 kotlinter = "5.5.0"
 android-minSdk = "24"
 android-compileSdk = "36"
